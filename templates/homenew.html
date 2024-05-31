@@ -1,0 +1,24 @@
+{% extends "site" %}
+
+{% block main %}
+    {% for backgroundBanner in entry.imageFile %}
+    <div class="banner_img" style="overflow: hidden; background-image: url('{{ backgroundBanner.url }}');">  </div>
+    {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-lg-5 col-xl-5 offset-sm-0 offset-md-0 offset-lg-6 offset-xl-6">
+                <div class=" project_section">
+                    {% for block in entry.linkWithTitle.all() %}
+                        <div class="">
+                            <ul>
+                                <li>
+                                    <a href="{{ block.linkPath }}">{{ block.linkTilte }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

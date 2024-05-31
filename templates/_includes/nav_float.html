@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="{% if menu.nav|length or menu.subNav|length %}col-10{% if menu.navigationType == 'floatLeft' or menu.navigationType == 'floatRight' %} col-lg-6{% else %} col-lg-3{% endif %}{% else %}col-12{% endif %}">
+        {% include "_images/logo" with {'class': 'logo'} %}</a>
+    </div>
+
+    {% if nav|length or navSub|length %}
+        <div class="hidden-md-down{% if menu.navigationType == 'floatLeft' or menu.navigationType == 'floatRight' %} col-lg-6{% else %} col-lg-9{% endif %}">
+
+            {% if
+                menu.navigationType == 'floatLeft' or
+                menu.navigationType == 'floatLeftWide'
+            %}
+                {% set first = nav %}
+                {% set second = navSub %}
+            {% else %}
+                {% set first = navSub|reverse %}
+                {% set second = nav|reverse %}
+            {% endif %}
+
+            {% for item in first %}
+                {% switch item.type.handle %}
+                    {% case "entry" %}
+                        <div class="py-0 float-left {% if menu.navigationType == 'floatRight' or menu.navigationType == 'floatRightWide' %} text-right float-right pl-3{% else %} pr-3{% endif %}">
+                            <a href="{{ item.entry.first().url }}" class="link-thick{% if item.entry.first().slug == page or item.entry.first().url == craft.request.getUrl() %} link-active{% endif %}" title="{% if item.overrideName %}{{ item.overrideName }}{% else %}{{ item.entry.first().title }}{% endif %}">{% if item.overrideName %}{{ item.overrideName }}{% else %}{{ item.entry.first().title }}{% endif %}</a>
+                        </div>
+
+                    {% case "hyperlink" %}
+                        <div class="py-0 float-left {% if menu.navigationType == 'floatRight' or menu.navigationType == 'floatRightWide' %} text-right float-right pl-3{% else %} pr-3{% endif %}">
+                            <a href="{{ item.hyperlink }}" class="link-thick" title="{{ item.hyperlinkName }}"{% if item.hyperlinkTarget %} target="_blank"{% endif %}>{{ item.hyperlinkName }}</a>
+                        </div>
+                {% endswitch %}
+            {% endfor %}
+            {% for item in second %}
+                {% switch item.type.handle %}
+                    {% case "entry" %}
+                        <div class="py-0 float-left {% if menu.navigationType == 'floatRight' or menu.navigationType == 'floatRightWide' %} text-right float-right pl-3{% else %} pr-3{% endif %}">
+                            <a href="{{ item.entry.first().url }}" class="link-thick{% if item.entry.first().slug == page or item.entry.first().url == craft.request.getUrl() %} link-active{% endif %}" title="{% if item.overrideName %}{{ item.overrideName }}{% else %}{{ item.entry.first().title }}{% endif %}">{% if item.overrideName %}{{ item.overrideName }}{% else %}{{ item.entry.first().title }}{% endif %}</a>
+                        </div>
+
+                    {% case "hyperlink" %}
+                        <div class="py-0 float-left {% if menu.navigationType == 'floatRight' or menu.navigationType == 'floatRightWide' %} text-right float-right pl-3{% else %} pr-3{% endif %}">
+                            <a href="{{ item.hyperlink }}" class="link-thick" title="{{ item.hyperlinkName }}"{% if item.hyperlinkTarget %} target="_blank"{% endif %}>{{ item.hyperlinkName }}</a>
+                        </div>
+                {% endswitch %}
+            {% endfor %}
+
+        </div>
+        <div class="col-2 hidden-lg-up">
+            {% include '_includes/nav_toggler' %}
+        </div>
+    {% endif %}
+</div>
